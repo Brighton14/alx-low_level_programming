@@ -120,57 +120,7 @@ char *shash_table_get(const shash_table_t *ht, const char *key)
 
 /**
  * shash_table_print - printthe hash table in the sorted way
- * @ht: pointer to'%s'", node->key, node->value);
-			flag = 1;
-			break;
-		}
-
-		flag = 1;
-		printf("'%s': '%s'", node->key, node->value);
-		node = node->sprev;
-	}
-	printf("}\n");
-}
-
-/**
- * shash_table_delete - delete the sorted hash table
  * @ht: pointer to the hash table
- * Return: void
- */
-
-void shash_table_delete(shash_table_t *ht)
-{
-	shash_node_t *node, *tmp;
-	unsigned long int i;
-
-	if (ht == NULL)
-		return;
-
-	for (i = 0; i < ht->size; i++)
-	{
-		node = ht->array[i];
-		if (node != NULL)
-		{
-			if (node->next == NULL)
-			{
-				free(node->value);
-				free(node->key);
-				free(node);
-				continue;
-			}
-			while (node != NULL)
-			{
-				tmp = node;
-				node = node->next;
-				free(tmp->value);
-				free(tmp->key);
-				free(tmp);
-			}
-		}
-	}
-	free(ht->array);
-	free(ht);
-} the hash table
  * Return: void
  */
 
@@ -226,4 +176,54 @@ void shash_table_print_rev(const shash_table_t *ht)
 
 		if (node->sprev == NULL)
 		{
-			printf("'%s': cd
+			printf("'%s': '%s'", node->key, node->value);
+			flag = 1;
+			break;
+		}
+
+		flag = 1;
+		printf("'%s': '%s'", node->key, node->value);
+		node = node->sprev;
+	}
+	printf("}\n");
+}
+
+/**
+ * shash_table_delete - delete the sorted hash table
+ * @ht: pointer to the hash table
+ * Return: void
+ */
+
+void shash_table_delete(shash_table_t *ht)
+{
+	shash_node_t *node, *tmp;
+	unsigned long int i;
+
+	if (ht == NULL)
+		return;
+
+	for (i = 0; i < ht->size; i++)
+	{
+		node = ht->array[i];
+		if (node != NULL)
+		{
+			if (node->next == NULL)
+			{
+				free(node->value);
+				free(node->key);
+				free(node);
+				continue;
+			}
+			while (node != NULL)
+			{
+				tmp = node;
+				node = node->next;
+				free(tmp->value);
+				free(tmp->key);
+				free(tmp);
+			}
+		}
+	}
+	free(ht->array);
+	free(ht);
+}
